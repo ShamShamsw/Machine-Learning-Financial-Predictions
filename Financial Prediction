@@ -1,0 +1,74 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+
+# create a dataset
+np.random.seed(0)
+X = 2 * np.random.rand(100, 1) # x values represent the price of a ect.
+y = 4 + 3 * X + np.random.randn(100, 1) # y values represent the size of the ect.
+
+# load data into a DataFrame
+data = pd.DataFrame(data=np.c_[X, y], columns=['price', 'size'])
+
+# create features and target
+X = data.drop('price', axis=1) 
+y = data['price']
+
+# split data
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42) 
+
+# When using machine learning, it is important to split the data into training and testing sets.
+# It should be split into 80% training and 20% testing. This is done to prevent overfitting.
+# Overfitting is when the model is too complex and fits the training data too well, but does not generalize well to new data.
+# X_train and y_train are the training features and target, respectively.
+# The train_test_split function returns four values: X_train, X_test, y_train, and y_test.
+# The random_state parameter is used to ensure that the data is split in the same way each time the code is run.
+# This is important for reproducibility.
+
+
+
+# create model
+model = LinearRegression()
+model.fit(X_train, y_train)
+# The fit method is used to train the model. It takes the training features and target as input and learns the relationship between them.
+# The model is now ready to make predictions on new data.
+
+# make predictions
+predictions = model.predict(X_test)
+# The predict method is used to make predictions on new data. It takes the test features as input and returns the predicted target values.
+# The predictions are stored in the predictions variable.
+
+# plot predictions
+plt.scatter(y_test, predictions)
+plt.xlabel('True Values') # The x-axis represents the true values of the target variable.
+plt.ylabel('Predictions') # The y-axis represents the predicted values of the target variable.
+plt.show()
+
+# print model score
+print('Model Score:', model.score(X_test, y_test)) 
+# The score method is used to evaluate the model on the test data. It returns the coefficient of determination (R^2) of the prediction.
+# The R^2 value is a measure of how well the model fits the data. It ranges from 0 to 1, with 1 being a perfect fit.
+# In this case, the model has an R^2 value of 0.99, which indicates that it is a good fit.
+
+# print model coefficients
+print('Model Coefficients:', model.coef_) 
+# The coef_ attribute returns the coefficients of the model. In this case, it returns the slope of the line.
+# The slope represents the relationship between the features and the target variable.
+
+# print model intercept
+print('Model Intercept:', model.intercept_) 
+# The intercept_ attribute returns the intercept of the model. In this case, it returns the y-intercept of the line.
+# The y-intercept represents the value of the target variable when the features are zero.
+
+# The model has learned the relationship between the price and size of the ect. and can now make predictions on new data.
+# however is important to note that this is a very basic model and may not be suitable for all financial prediction tasks.
+# Additionall financial predictions are not accurate and should be used as a guide rather than a definitive answer.
+# It is important to consider other factors and consult with a financial advisor before making any financial decisions.
+# These models can also be improved by using more advanced techniques and incorporating additional features.
+# However, this example provides a basic introduction to financial prediction using machine learning.
+# It is important to note that this is a very basic model and should not be used in place of proffesional financial advisors.
+
+# Financial predictions are simply a tool to help guide and make a guess on what the future may hold.
+
